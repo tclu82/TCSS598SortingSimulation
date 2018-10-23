@@ -11,24 +11,9 @@ public class Main {
     public static void main(String... theArgs) {
         List<Integer> randomList = generateRandomNumber(DATA_SIZE);
 //        System.out.println(randomList);
+        List<List<Integer>> subLists = generate4DataSet(randomList);
+        System.out.println(subLists);
 
-
-        try {
-            List<List<Integer>> subLists = new ArrayList<>();
-            for (int i = 0; i < DATA_SIZE; i += DATA_SIZE / 4) {
-                List<Integer> subList = generateSubList(randomList, i, i + DATA_SIZE / 4);
-                subLists.add(subList);
-            }
-            System.out.println(subLists);
-
-
-
-
-
-
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Please adjust DATA_SIZE can be divided by 4");
-        }
     }
 
     private static List<Integer> generateRandomNumber(int dataSize) {
@@ -51,4 +36,18 @@ public class Main {
         return subList;
     }
 
+    private static List<List<Integer>> generate4DataSet(List<Integer> list) {
+        List<List<Integer>> subLists = new ArrayList<>();
+        try {
+
+            for (int i = 0; i < DATA_SIZE; i += DATA_SIZE / 4) {
+                List<Integer> subList = generateSubList(list, i, i + DATA_SIZE / 4);
+                subLists.add(subList);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Please adjust DATA_SIZE can be divided by 4");
+            return null;
+        }
+        return subLists;
+    }
 }
