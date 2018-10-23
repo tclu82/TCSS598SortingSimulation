@@ -4,22 +4,23 @@ import java.util.Random;
 
 public class Main {
 
-    private static final int DATA_SIZE = 40;
+    private static final int DATA_SIZE = 20;
 
 
 
     public static void main(String... theArgs) {
         List<Integer> randomList = generateRandomNumber(DATA_SIZE);
-//        System.out.println(randomList);
         List<List<Integer>> subLists = generate4DataSet(randomList);
-//        System.out.println(subLists);
 
         for (List<Integer> list: subLists) {
+            // Put your sorting method here
 
-            quickSort(list);
 
+            list = mergeSort(list);
+            System.out.println(list);
+//            quickSort(list);
         }
-        System.out.println(subLists);
+//        System.out.println(subLists);
     }
 
     private static List<Integer> generateRandomNumber(int dataSize) {
@@ -41,6 +42,59 @@ public class Main {
         List<Integer> subList = list.subList(start, end);
         return subList;
     }
+
+    private static List<Integer> mergeSort(List<Integer> list) {
+        return mergeSort(list, 0, list.size()-1);
+    }
+
+    private static List<Integer> mergeSort(List<Integer> list, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        if (start == end) {
+            List<Integer> result = new ArrayList<>();
+            result.add(list.get(start));
+            return result;
+        }
+        int mid = (start + end) / 2;
+        List<Integer> leftList = mergeSort(list, start, mid);
+        List<Integer> rightList = mergeSort(list, mid + 1, end);
+        return merge(leftList, rightList);
+    }
+
+    private static List<Integer> merge(List<Integer> list1, List<Integer> list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        List<Integer> result = new ArrayList<>();
+        int index1 = 0, index2 = 0;
+
+        while (index1 < list1.size() && index2 < list2.size()) {
+
+            if (list1.get(index1) < list2.get(index2)) {
+                result.add(list1.get(index1));
+                index1++;
+
+            } else {
+                result.add(list2.get(index2));
+                index2++;
+            }
+        }
+        while (index1 < list1.size()) {
+            result.add(list1.get(index1));
+            index1++;
+        }
+        while (index2 < list2.size()) {
+            result.add(list2.get(index2));
+            index2++;
+        }
+        return result;
+    }
+
+
 
     private static List<List<Integer>> generate4DataSet(List<Integer> list) {
         List<List<Integer>> subLists = new ArrayList<>();
