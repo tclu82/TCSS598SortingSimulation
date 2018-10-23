@@ -12,8 +12,14 @@ public class Main {
         List<Integer> randomList = generateRandomNumber(DATA_SIZE);
 //        System.out.println(randomList);
         List<List<Integer>> subLists = generate4DataSet(randomList);
-        System.out.println(subLists);
+//        System.out.println(subLists);
 
+        for (List<Integer> list: subLists) {
+
+            quickSort(list);
+
+        }
+        System.out.println(subLists);
     }
 
     private static List<Integer> generateRandomNumber(int dataSize) {
@@ -49,5 +55,37 @@ public class Main {
             return null;
         }
         return subLists;
+    }
+
+    private static void quickSort(List<Integer> list) {
+        quickSort(list, 0, list.size() -1);
+    }
+
+    private static void quickSort(List<Integer> list, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int index = quickSelect(list, start, end);
+        quickSort(list, start, index -1);
+        quickSort(list, index + 1, end);
+    }
+
+    private static int quickSelect(List<Integer> list, int start, int end) {
+        int pivot = list.get(start), index = start;
+        swap(list, start, end);
+        while (index < end) {
+            if (list.get(index) < pivot) {
+                swap(list, index, start++);
+            }
+            index++;
+        }
+        swap(list, start, end);
+        return start;
+    }
+
+    private static void swap(List<Integer> list, int index1, int index2) {
+        int temp = list.get(index1);
+        list.set(index1, list.get(index2));
+        list.set(index2, temp);
     }
 }
