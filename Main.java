@@ -20,17 +20,14 @@ public class Main {
             // Put your sorting method here
 
             int sortedness = calculateSortednessByInsertionIndex(list);
-
-            StringBuilder sb = new StringBuilder("Sortedness(Insertion index) of ");
-            sb.append(list);
-            sb.append(" is " + sortedness);
+            StringBuilder sb = new StringBuilder("Sortedness(Insertion index): " + sortedness + ", length: " + list.size());
             System.out.println(sb.toString());
 
 //            list = mergeSort(list);
 //            System.out.println(list);
             quickSort(list);
         }
-//        System.out.println(subLists);
+        System.out.println(subLists);
     }
 
     /**
