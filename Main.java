@@ -1,7 +1,19 @@
+/*
+ * TCSS 598 Sorting simulation
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This project analyze bubble sort, insertion sort, selection sort, merge sort and quick sort
+ * with random data set and analyze sortedness
+ *
+ * @author Zac Lu       tclu82@uw.edu
+ * @author Jiaqi Wang   jw0515@uw.edu
+ * @version October 2018
+ */
 public class Main {
 
     // Global data size
