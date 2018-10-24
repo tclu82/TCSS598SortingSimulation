@@ -4,10 +4,14 @@ import java.util.Random;
 
 public class Main {
 
+    // Global data size
     private static final int DATA_SIZE = 20;
 
-
-
+    /**
+     * Main method
+     *
+     * @param theArgs
+     */
     public static void main(String... theArgs) {
         List<Integer> randomList = generateRandomNumber(DATA_SIZE);
         List<List<Integer>> subLists = generate4DataSet(randomList);
@@ -15,10 +19,16 @@ public class Main {
         for (List<Integer> list: subLists) {
             // Put your sorting method here
 
+            int sortedness = calculateSortednessByInsertionIndex(list);
 
-            list = mergeSort(list);
-            System.out.println(list);
-//            quickSort(list);
+            StringBuilder sb = new StringBuilder("Sortedness(Insertion index) of ");
+            sb.append(list);
+            sb.append(" is " + sortedness);
+            System.out.println(sb.toString());
+
+//            list = mergeSort(list);
+//            System.out.println(list);
+            quickSort(list);
         }
 //        System.out.println(subLists);
     }
@@ -218,5 +228,45 @@ public class Main {
         int temp = list.get(index1);
         list.set(index1, list.get(index2));
         list.set(index2, temp);
+    }
+
+    /**
+     * Calculate sortedness with longest increasing subsequence
+     *
+     * @param list input list
+     * @return sortedness
+     */
+    private static int calculateSortednessByInsertionIndex(List<Integer> list) {
+        int longestIncreasingSubsequence = findLlongestIncreasingSubsequence(list);
+        return list.size() - longestIncreasingSubsequence;
+    }
+
+    /**
+     * Find longest increasing subsequence
+     *
+     * @param list
+     * @return length of longest increasing subsequence
+     */
+    private static int findLlongestIncreasingSubsequence(List<Integer> list) {
+        if (list == null || list.size() == 0) {
+            return 0;
+        }
+        int size = list.size();
+        int[] dp = new int[size];
+        int maxLen = 0;
+
+        for (int i=0; i<size; i++) {
+            dp[i] = 1;
+
+            for (int j=i-1; j>=0; j--) {
+                // Ascending
+                if (list.get(j) < list.get(i)) {
+                    // At least d[j] + 1
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxLen = Math.max(maxLen, dp[i]);
+        }
+        return maxLen;
     }
 }
